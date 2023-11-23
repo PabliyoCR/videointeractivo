@@ -71,10 +71,10 @@
   <body>
     <div id="viajes" class="texto texto-izquierdo">
       Viajes de Cristobal Colón <br /><br />
-      <div class="link" onclick="playVideo(0, 75.11)">Primer Viaje</div>
-      <div class="link" onclick="playVideo(75.5, 118.5)">Segundo Viaje</div>
-      <div class="link" onclick="playVideo(118.85, 158.19)">Tercer Viaje</div>
-      <div class="link" onclick="playVideo(158.5, 195.15)">Cuarto Viaje</div>
+      <div class="link" onclick="playVideo(0)">Primer Viaje</div>
+      <div class="link" onclick="playVideo(75.5)">Segundo Viaje</div>
+      <div class="link" onclick="playVideo(118.85)">Tercer Viaje</div>
+      <div class="link" onclick="playVideo(158.5)">Cuarto Viaje</div>
     </div>
     <div id="trivia" class="texto texto-centro" style="display: none">
       <br /><br />
@@ -110,9 +110,9 @@
     </div>
     <div id="tecnologias" class="texto texto-derecho">
       Avances Tecnológicos en la Navegacion <br /><br />
-      <div class="link" onclick="playVideo(195.2, 202.22)">Sextante</div>
-      <div class="link" onclick="playVideo(202.5, 210.9)">Mapas Portulanos</div>
-      <div class="link" onclick="playVideo(211.2, 220.12)">Brújula</div>
+      <div class="link" onclick="playVideo(195.2)">Sextante</div>
+      <div class="link" onclick="playVideo(202.5)">Mapas Portulanos</div>
+      <div class="link" onclick="playVideo(211.2)">Brújula</div>
     </div>
     <div id="video-container">
       <!-- <video id="video" ontimeupdate="checkVideoTime()">
@@ -124,18 +124,12 @@
 
     <script>
       document.querySelector("#tecnologias").style.display = "none"
-      var videoController
 
       var video = document.getElementById("video")
 
-      function playVideo(startTime, endTime) {
-        clearTimeout(videoController)
+      function playVideo(startTime) {
         video.currentTime = startTime
         video.play()
-        videoController = setTimeout(function () {
-          video.pause()
-          video.currentTime = endTime
-        }, (endTime - startTime) * 1000)
       }
 
       function showContinueButton() {
@@ -153,6 +147,10 @@
         if (video.currentTime >= 194 && video.currentTime <= 194.5) {
           document.getElementById("viajes").style.display = "none"
           document.getElementById("trivia").style.display = "block"
+        }
+
+        if ((video.currentTime >= 75.11 && video.currentTime <= 75.3) || (video.currentTime >= 118.5 && video.currentTime <= 118.7) || (video.currentTime >= 158.19 && video.currentTime <= 158.4) || (video.currentTime >= 194.8 && video.currentTime <= 195.1) || (video.currentTime >= 202.22 && video.currentTime <= 202.4) || (video.currentTime >= 210.9 && video.currentTime <= 211.1) || video.currentTime >= 220.12) {
+          video.pause()
         }
       }
 
