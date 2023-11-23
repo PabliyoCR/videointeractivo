@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Video Interactivo</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #video-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .texto {
+        position: absolute;
+        top: 30%;
+        width: 25%;
+        height: 100%;
+        color: white;
+        font-size: 2em;
+        text-align: center;
+        z-index: 1;
+      }
+
+      .texto-izquierdo {
+        left: 0;
+      }
+
+      .texto-derecho {
+        right: 0;
+      }
+
+      .texto-centro {
+        top: 0;
+        right: 50%;
+        width: 50%;
+        transform: translateX(50%);
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .link {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .correct-answer {
+        color: green;
+      }
+
+      .incorrect-answer {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="viajes" class="texto texto-izquierdo">
+      Viajes de Cristobal Colón <br /><br />
+      <div class="link" onclick="playVideo(0, 75.11)">Primer Viaje</div>
+      <div class="link" onclick="playVideo(75.5, 118.5)">Segundo Viaje</div>
+      <div class="link" onclick="playVideo(118.85, 158.19)">Tercer Viaje</div>
+      <div class="link" onclick="playVideo(158.5, 195.15)">Cuarto Viaje</div>
+    </div>
+    <div id="trivia" class="texto texto-centro" style="display: none">
+      <br /><br />
+      Trivia <br /><br />
+      <div>
+        <div>
+          <p>¿Cuál fue el año del primer viaje de Cristobal Colón?</p>
+          <label class="respuestaCorrecta" for="trivia1_1492"> <input type="radio" id="trivia1_1492" name="trivia1" value="1492" /> 1492 </label><br />
+          <label class="" for="trivia1_1498"> <input type="radio" id="trivia1_1498" name="trivia1" value="1498" /> 1498 </label><br />
+          <label class="" for="trivia1_1500"> <input type="radio" id="trivia1_1500" name="trivia1" value="1500" /> 1500 </label><br />
+          <label class="" for="trivia1_1502"> <input type="radio" id="trivia1_1502" name="trivia1" value="1502" /> 1502 </label><br />
+        </div>
+        <br />
+        <div>
+          <p>¿En cuál de los cuatro viajes llegó Cristobal Colón a Costa Rica?</p>
+          <label for="trivia2_primero"> <input type="radio" id="trivia2_primero" name="trivia2" value="Primero" /> Primero </label><br />
+          <label for="trivia2_segundo"> <input type="radio" id="trivia2_segundo" name="trivia2" value="Segundo" /> Segundo </label><br />
+          <label for="trivia2_tercero"> <input type="radio" id="trivia2_tercero" name="trivia2" value="Tercero" /> Tercero </label><br />
+          <label class="respuestaCorrecta" for="trivia2_cuarto"> <input type="radio" id="trivia2_cuarto" name="trivia2" value="Cuarto" /> Cuarto </label><br />
+        </div>
+        <br />
+        <div>
+          <p>¿En qué costas los expedicionarios de Colón tocarón tierra americana continental por primera mez?</p>
+          <label for="trivia3_ruta_asia"> <input type="radio" id="trivia3_ruta_asia" name="trivia3" value="Panamá" /> Panamá </label><br />
+          <label for="trivia3_costas_africa"> <input type="radio" id="trivia3_costas_africa" name="trivia3" value="Colombia" /> Colombia </label><br />
+          <label class="respuestaCorrecta" for="trivia3_nuevas_tierras"> <input type="radio" id="trivia3_nuevas_tierras" name="trivia3" value="Venezuela" /> Venezuela </label><br />
+          <label for="trivia3_tesoros"> <input type="radio" id="trivia3_tesoros" name="trivia3" value="México" /> México </label><br />
+        </div>
+      </div>
+      <br /><br />
+      <button id="responder-btn" style="font-size: 0.8em; padding: 10px 20px" onclick="showContinueButton()">Responder</button>
+      <button id="continuar-btn" style="font-size: 0.8em; padding: 10px 20px; display: none" onclick="showDivs()">Continuar</button>
+    </div>
+    <div id="tecnologias" class="texto texto-derecho">
+      Avances Tecnológicos en la Navegacion <br /><br />
+      <div class="link" onclick="playVideo(195.2, 202.22)">Sextante</div>
+      <div class="link" onclick="playVideo(202.5, 210.9)">Mapas Portulanos</div>
+      <div class="link" onclick="playVideo(211.2, 220.12)">Brújula</div>
+    </div>
+    <div id="video-container">
+      <video id="video" ontimeupdate="checkVideoTime()">
+        <source src="colon.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <script>
+      document.querySelector("#tecnologias").style.display = "none"
+      var videoController
+
+      var video = document.getElementById("video")
+
+      function playVideo(startTime, endTime) {
+        clearTimeout(videoController)
+        video.currentTime = startTime
+        video.play()
+        videoController = setTimeout(function () {
+          video.pause()
+          video.currentTime = endTime
+        }, (endTime - startTime) * 1000)
+      }
+
+      function showContinueButton() {
+        document.querySelector("#responder-btn").style.display = "none"
+        document.querySelector("#continuar-btn").style.display = "inline-block"
+      }
+
+      function showDivs() {
+        document.getElementById("trivia").style.display = "none"
+        document.getElementById("viajes").style.display = "block"
+        document.getElementById("tecnologias").style.display = "block"
+      }
+
+      function checkVideoTime() {
+        if (video.currentTime >= 194 && video.currentTime <= 194.5) {
+          document.getElementById("viajes").style.display = "none"
+          document.getElementById("trivia").style.display = "block"
+        }
+      }
+
+      document.getElementById("responder-btn").addEventListener("click", function () {
+        var trivia1Answer = document.querySelector('input[name="trivia1"]:checked')?.value || ""
+        var trivia2Answer = document.querySelector('input[name="trivia2"]:checked')?.value || ""
+        var trivia3Answer = document.querySelector('input[name="trivia3"]:checked')?.value || ""
+
+        document.querySelectorAll(".respuestaCorrecta").forEach(function (element) {
+          element.classList.add("correct-answer")
+        })
+
+        if (trivia1Answer !== "1492") {
+          console.log(trivia1Answer)
+          document.querySelector('input[name="trivia1"]:checked').parentElement.classList.add("incorrect-answer")
+        }
+
+        if (trivia2Answer !== "Cuarto") {
+          document.querySelector('input[name="trivia2"]:checked').parentElement.classList.add("incorrect-answer")
+        }
+
+        if (trivia3Answer !== "Venezuela") {
+          document.querySelector('input[name="trivia3"]:checked').parentElement.classList.add("incorrect-answer")
+        }
+      })
+    </script>
+  </body>
+</html>
